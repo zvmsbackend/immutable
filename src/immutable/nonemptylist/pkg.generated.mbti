@@ -1,0 +1,91 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/nonemptylist"
+
+import(
+  "moonbitlang/core/json"
+  "moonbitlang/core/list"
+  "moonbitlang/core/quickcheck"
+  "moonbitlang/core/quickcheck/splitmix"
+)
+
+// Values
+pub fn[A] cons(A, NonEmptyList[A]) -> NonEmptyList[A]
+
+pub fn[A] cons_list(A, @list.List[A]) -> NonEmptyList[A]
+
+pub fn[A] from_array(ArrayView[A]) -> NonEmptyList[A]?
+
+pub fn[A] from_iter(Iter[A]) -> NonEmptyList[A]?
+
+pub fn[A] from_iter_rev(Iter[A]) -> NonEmptyList[A]?
+
+pub fn[A] repeat(Int, A) -> NonEmptyList[A]
+
+pub fn[A] singleton(A) -> NonEmptyList[A]
+
+pub fn[A] unsafe_from_array(ArrayView[A]) -> NonEmptyList[A]
+
+pub fn[A] unsafe_from_list(@list.List[A]) -> NonEmptyList[A]
+
+// Errors
+
+// Types and methods
+type NonEmptyList[A]
+pub fn[A] NonEmptyList::all(Self[A], (A) -> Bool raise?) -> Bool raise?
+pub fn[A] NonEmptyList::any(Self[A], (A) -> Bool raise?) -> Bool raise?
+pub fn[A] NonEmptyList::concat(Self[A], Self[A]) -> Self[A]
+pub fn[A] NonEmptyList::concat_list(Self[A], @list.List[A]) -> Self[A]
+pub fn[A : Eq] NonEmptyList::contains(Self[A], A) -> Bool
+pub fn[A] NonEmptyList::each(Self[A], (A) -> Unit raise?) -> Unit raise?
+pub fn[A] NonEmptyList::eachi(Self[A], (Int, A) -> Unit raise?) -> Unit raise?
+pub fn[A] NonEmptyList::find(Self[A], (A) -> Bool raise?) -> A? raise?
+pub fn[A] NonEmptyList::find_index(Self[A], (A) -> Bool raise?) -> Int? raise?
+pub fn[A] NonEmptyList::findi(Self[A], (A, Int) -> Bool raise?) -> A? raise?
+pub fn[A] NonEmptyList::flat_map(Self[A], (A) -> Self[A] raise?) -> Self[A] raise?
+pub fn[A] NonEmptyList::flatten(Self[Self[A]]) -> Self[A]
+pub fn[A, B] NonEmptyList::fold(Self[A], init~ : B, (B, A) -> B raise?) -> B raise?
+pub fn[A, B] NonEmptyList::foldi(Self[A], init~ : B, (Int, B, A) -> B raise?) -> B raise?
+pub fn[A] NonEmptyList::head(Self[A]) -> A
+pub fn[A] NonEmptyList::intercalate(Self[Self[A]], Self[A]) -> Self[A]
+pub fn[A] NonEmptyList::intersperse(Self[A], A) -> Self[A]
+pub fn[A : Eq] NonEmptyList::is_prefix(Self[A], Self[A]) -> Bool
+pub fn[A : Eq] NonEmptyList::is_suffix(Self[A], Self[A]) -> Bool
+pub fn[A] NonEmptyList::iter(Self[A]) -> Iter[A]
+pub fn[A] NonEmptyList::iter2(Self[A]) -> Iter2[Int, A]
+pub fn[A] NonEmptyList::last(Self[A]) -> A
+pub fn[A] NonEmptyList::length(Self[A]) -> Int
+pub fn[A : Eq, B] NonEmptyList::lookup(Self[(A, B)], A) -> B?
+pub fn[A, B] NonEmptyList::map(Self[A], (A) -> B raise?) -> Self[B] raise?
+pub fn[A, B] NonEmptyList::mapi(Self[A], (Int, A) -> B raise?) -> Self[B] raise?
+pub fn[A : Compare] NonEmptyList::maximum(Self[A]) -> A
+pub fn[A : Compare] NonEmptyList::minimum(Self[A]) -> A
+pub fn[A] NonEmptyList::nth(Self[A], Int) -> A?
+pub fn[A] NonEmptyList::prepend(Self[A], A) -> Self[A]
+pub fn[A] NonEmptyList::rev(Self[A]) -> Self[A]
+pub fn[A] NonEmptyList::rev_concat(Self[A], Self[A]) -> Self[A]
+pub fn[A] NonEmptyList::rev_map(Self[A], (A) -> A raise?) -> Self[A] raise?
+pub fn[A, B] NonEmptyList::scan_left(Self[A], init~ : B, (B, A) -> B raise?) -> Self[B] raise?
+pub fn[A, B] NonEmptyList::scan_right(Self[A], init~ : B, (A, B) -> B raise?) -> Self[B] raise?
+pub fn[A : Compare] NonEmptyList::sort(Self[A]) -> Self[A]
+pub fn[A] NonEmptyList::tail(Self[A]) -> Self[A]?
+pub fn[A] NonEmptyList::tail_list(Self[A]) -> @list.List[A]
+pub fn[A] NonEmptyList::to_array(Self[A]) -> Array[A]
+pub fn[A] NonEmptyList::to_list(Self[A]) -> @list.List[A]
+pub fn[A] NonEmptyList::uncons(Self[A]) -> (A, @list.List[A])
+pub fn[A] NonEmptyList::unsafe_nth(Self[A], Int) -> A
+pub fn[A] NonEmptyList::unsafe_tail(Self[A]) -> Self[A]
+pub fn[A, B] NonEmptyList::unzip(Self[(A, B)]) -> (Self[A], Self[B])
+pub fn[A, B] NonEmptyList::zip(Self[A], Self[B]) -> Self[(A, B)]
+pub impl[A] Add for NonEmptyList[A]
+pub impl[A : Default] Default for NonEmptyList[A]
+pub impl[A : Eq] Eq for NonEmptyList[A]
+pub impl[A : Hash] Hash for NonEmptyList[A]
+pub impl[A : Show] Show for NonEmptyList[A]
+pub impl[A : ToJson] ToJson for NonEmptyList[A]
+pub impl[A : @json.FromJson] @json.FromJson for NonEmptyList[A]
+pub impl[A : @quickcheck.Arbitrary] @quickcheck.Arbitrary for NonEmptyList[A]
+
+// Type aliases
+
+// Traits
+

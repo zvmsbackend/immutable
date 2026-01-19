@@ -1,0 +1,32 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/listzipper"
+
+import(
+  "moonbitlang/core/list"
+)
+
+// Values
+pub fn[A] from_list(@list.List[A]) -> ListZipper[A]
+
+// Errors
+
+// Types and methods
+type ListZipper[A]
+pub fn[A] ListZipper::modify(Self[A], (A) -> A raise?) -> Self[A] raise?
+pub fn[A] ListZipper::move_left(Self[A]) -> Self[A]?
+pub fn[A] ListZipper::move_right(Self[A]) -> Self[A]?
+pub fn[A] ListZipper::peek(Self[A]) -> A?
+pub fn[A] ListZipper::put(Self[A], A) -> Self[A]
+pub fn[A] ListZipper::to_list(Self[A]) -> @list.List[A]
+pub fn[A] ListZipper::unsafe_move_left(Self[A]) -> Self[A]
+pub fn[A] ListZipper::unsafe_move_right(Self[A]) -> Self[A]
+pub fn[A] ListZipper::unsafe_peek(Self[A]) -> A
+pub impl[A : Compare] Compare for ListZipper[A]
+pub impl[A : Eq] Eq for ListZipper[A]
+pub impl[A : Hash] Hash for ListZipper[A]
+pub impl[A : Show] Show for ListZipper[A]
+
+// Type aliases
+
+// Traits
+

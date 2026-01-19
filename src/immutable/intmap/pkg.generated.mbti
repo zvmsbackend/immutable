@@ -1,0 +1,55 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/intmap"
+
+import(
+  "moonbitlang/core/json"
+  "moonbitlang/core/quickcheck"
+  "moonbitlang/core/quickcheck/splitmix"
+)
+
+// Values
+pub fn[A] from_array(ArrayView[(Int, A)]) -> IntMap[A]
+
+pub fn[A] from_iter(Iter[(Int, A)]) -> IntMap[A]
+
+pub fn[A] new() -> IntMap[A]
+
+// Errors
+
+// Types and methods
+type IntMap[A]
+pub fn[A] IntMap::add(Self[A], Int, A) -> Self[A]
+#alias("_[_]")
+pub fn[A] IntMap::at(Self[A], Int) -> A
+pub fn[A] IntMap::contains(Self[A], Int) -> Bool
+pub fn[A] IntMap::each(Self[A], (Int, A) -> Unit raise?) -> Unit raise?
+pub fn[A] IntMap::eachi(Self[A], (Int, Int, A) -> Unit raise?) -> Unit raise?
+pub fn[A] IntMap::filter(Self[A], (Int, A) -> Bool raise?) -> Self[A] raise?
+pub fn[A, B] IntMap::fold(Self[A], init~ : B, (B, Int, A) -> B raise?) -> B raise?
+pub fn[A] IntMap::get(Self[A], Int) -> A?
+pub fn[A] IntMap::get_or_default(Self[A], Int, A) -> A
+pub fn[A] IntMap::get_or_init(Self[A], Int, () -> A) -> A
+pub fn[A] IntMap::is_empty(Self[A]) -> Bool
+pub fn[A] IntMap::iter(Self[A]) -> Iter[(Int, A)]
+pub fn[A] IntMap::iter2(Self[A]) -> Iter2[Int, A]
+pub fn[A] IntMap::keys(Self[A]) -> Iter[Int]
+pub fn[A] IntMap::length(Self[A]) -> Int
+pub fn[A, B] IntMap::map(Self[A], (Int, A) -> B raise?) -> Self[B] raise?
+pub fn[A] IntMap::merge(Self[A], Self[A]) -> Self[A]
+pub fn[A] IntMap::remove(Self[A], Int) -> Self[A]
+pub fn[A] IntMap::singleton(Int, A) -> Self[A]
+pub fn[A] IntMap::to_array(Self[A]) -> Array[(Int, A)]
+pub fn[A] IntMap::values(Self[A]) -> Iter[A]
+pub impl[A] Add for IntMap[A]
+pub impl[A : Compare] Compare for IntMap[A]
+pub impl[A] Default for IntMap[A]
+pub impl[A : Eq] Eq for IntMap[A]
+pub impl[A : Show] Show for IntMap[A]
+pub impl[A : ToJson] ToJson for IntMap[A]
+pub impl[A : @json.FromJson] @json.FromJson for IntMap[A]
+pub impl[A : @quickcheck.Arbitrary] @quickcheck.Arbitrary for IntMap[A]
+
+// Type aliases
+
+// Traits
+

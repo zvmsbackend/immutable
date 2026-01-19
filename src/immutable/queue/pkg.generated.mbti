@@ -1,0 +1,43 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/queue"
+
+import(
+  "moonbitlang/core/quickcheck"
+  "moonbitlang/core/quickcheck/splitmix"
+)
+
+// Values
+pub fn[A] from_array(ArrayView[A]) -> Queue[A]
+
+pub fn[A] from_iter(Iter[A]) -> Queue[A]
+
+pub fn[A] new() -> Queue[A]
+
+// Errors
+
+// Types and methods
+type Queue[A]
+pub fn[A] Queue::each(Self[A], (A) -> Unit raise?) -> Unit raise?
+pub fn[A] Queue::eachi(Self[A], (Int, A) -> Unit raise?) -> Unit raise?
+pub fn[A, B] Queue::fold(Self[A], init~ : B, (B, A) -> B raise?) -> B raise?
+pub fn[A] Queue::is_empty(Self[A]) -> Bool
+pub fn[A] Queue::iter(Self[A]) -> Iter[A]
+pub fn[A] Queue::length(Self[A]) -> Int
+pub fn[A] Queue::peek(Self[A]) -> A?
+pub fn[A] Queue::pop(Self[A]) -> Self[A]?
+pub fn[A] Queue::push(Self[A], A) -> Self[A]
+pub fn[A] Queue::uncons(Self[A]) -> (A, Self[A])?
+pub fn[A] Queue::unsafe_peek(Self[A]) -> A
+pub fn[A] Queue::unsafe_pop(Self[A]) -> Self[A]
+pub fn[A] Queue::unsafe_uncons(Self[A]) -> (A, Self[A])
+pub impl[A : Compare] Compare for Queue[A]
+pub impl[A] Default for Queue[A]
+pub impl[A : Eq] Eq for Queue[A]
+pub impl[A : Hash] Hash for Queue[A]
+pub impl[A : Show] Show for Queue[A]
+pub impl[A : @quickcheck.Arbitrary] @quickcheck.Arbitrary for Queue[A]
+
+// Type aliases
+
+// Traits
+

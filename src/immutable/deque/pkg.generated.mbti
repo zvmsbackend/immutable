@@ -1,0 +1,65 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/deque"
+
+import(
+  "moonbitlang/core/json"
+  "moonbitlang/core/list"
+  "moonbitlang/core/quickcheck"
+  "moonbitlang/core/quickcheck/splitmix"
+)
+
+// Values
+pub fn[A] from_array(ArrayView[A]) -> Deque[A]
+
+pub fn[A] from_cat_lists(@list.List[A], @list.List[A]) -> Deque[A]
+
+pub fn[A] from_iter(Iter[A]) -> Deque[A]
+
+pub fn[A] from_iter_rev(Iter[A]) -> Deque[A]
+
+pub fn[A] from_list(@list.List[A]) -> Deque[A]
+
+pub fn[A] new() -> Deque[A]
+
+// Errors
+
+// Types and methods
+pub struct Deque[A] {
+  front : @list.List[A]
+  back : @list.List[A]
+}
+pub fn[A] Deque::back(Self[A]) -> A?
+pub fn[A] Deque::each(Self[A], (A) -> Unit) -> Unit
+pub fn[A] Deque::eachi(Self[A], (Int, A) -> Unit) -> Unit
+pub fn[A] Deque::front(Self[A]) -> A?
+pub fn[A] Deque::is_empty(Self[A]) -> Bool
+pub fn[A] Deque::iter(Self[A]) -> Iter[A]
+pub fn[A] Deque::iter2(Self[A]) -> Iter2[Int, A]
+pub fn[A] Deque::length(Self[A]) -> Int
+pub fn[A] Deque::pop_back(Self[A]) -> Self[A]?
+pub fn[A] Deque::pop_front(Self[A]) -> Self[A]?
+pub fn[A] Deque::push_back(Self[A], A) -> Self[A]
+pub fn[A] Deque::push_front(Self[A], A) -> Self[A]
+pub fn[A] Deque::rev(Self[A]) -> Self[A]
+pub fn[A] Deque::singleton(A) -> Self[A]
+pub fn[A] Deque::to_array(Self[A]) -> Array[A]
+pub fn[A] Deque::to_list(Self[A]) -> @list.List[A]
+pub fn[A] Deque::uncons_back(Self[A]) -> (A, Self[A])?
+pub fn[A] Deque::uncons_front(Self[A]) -> (A, Self[A])?
+pub fn[A] Deque::unsafe_back(Self[A]) -> A
+pub fn[A] Deque::unsafe_front(Self[A]) -> A
+pub fn[A] Deque::unsafe_uncons_back(Self[A]) -> (A, Self[A])
+pub fn[A] Deque::unsafe_uncons_front(Self[A]) -> (A, Self[A])
+pub impl[A : Compare] Compare for Deque[A]
+pub impl[A] Default for Deque[A]
+pub impl[A : Eq] Eq for Deque[A]
+pub impl[A : Hash] Hash for Deque[A]
+pub impl[A : Show] Show for Deque[A]
+pub impl[A : ToJson] ToJson for Deque[A]
+pub impl[A : @json.FromJson] @json.FromJson for Deque[A]
+pub impl[A : @quickcheck.Arbitrary] @quickcheck.Arbitrary for Deque[A]
+
+// Type aliases
+
+// Traits
+

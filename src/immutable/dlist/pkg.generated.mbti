@@ -1,0 +1,49 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/dlist"
+
+import(
+  "moonbitlang/core/json"
+  "moonbitlang/core/quickcheck"
+  "moonbitlang/core/quickcheck/splitmix"
+)
+
+// Values
+pub fn[A] from_array(ArrayView[A]) -> DList[A]
+
+pub fn[A] from_iter(Iter[A]) -> DList[A]
+
+pub fn[A] new() -> DList[A]
+
+pub fn[A] singleton(A) -> DList[A]
+
+// Errors
+
+// Types and methods
+type DList[A]
+pub fn[A] DList::concat(Self[A], Self[A]) -> Self[A]
+pub fn[A] DList::each(Self[A], (A) -> Unit raise?) -> Unit raise?
+pub fn[A] DList::eachi(Self[A], (Int, A) -> Unit raise?) -> Unit raise?
+pub fn[A, B] DList::fold(Self[A], init~ : B, (B, A) -> B raise?) -> B raise?
+pub fn[A] DList::is_empty(Self[A]) -> Bool
+pub fn[A] DList::iter(Self[A]) -> Iter[A]
+pub fn[A] DList::iter2(Self[A]) -> Iter2[Int, A]
+pub fn[A] DList::length(Self[A]) -> Int
+pub fn[A, B] DList::map(Self[A], (A) -> B raise?) -> Self[B] raise?
+pub fn[A, B] DList::mapi(Self[A], (Int, A) -> B raise?) -> Self[B] raise?
+pub fn[A] DList::push_back(Self[A], A) -> Self[A]
+pub fn[A] DList::push_front(Self[A], A) -> Self[A]
+pub fn[A] DList::to_array(Self[A]) -> Array[A]
+pub impl[A] Add for DList[A]
+pub impl[A : Compare] Compare for DList[A]
+pub impl[A] Default for DList[A]
+pub impl[A : Eq] Eq for DList[A]
+pub impl[A : Hash] Hash for DList[A]
+pub impl[A : Show] Show for DList[A]
+pub impl[A : ToJson] ToJson for DList[A]
+pub impl[A : @json.FromJson] @json.FromJson for DList[A]
+pub impl[A : @quickcheck.Arbitrary] @quickcheck.Arbitrary for DList[A]
+
+// Type aliases
+
+// Traits
+

@@ -1,0 +1,23 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/lazy"
+
+// Values
+pub fn[A] from_thunk(() -> A) -> Lazy[A]
+
+pub fn[A] from_value(A) -> Lazy[A]
+
+// Errors
+
+// Types and methods
+type Lazy[A]
+pub fn[A, B] Lazy::flat_map(Self[A], (A) -> Self[B]) -> Self[B]
+pub fn[A, B] Lazy::flat_map_lazy(Self[A], (A) -> Self[B]) -> Self[B]
+pub fn[A] Lazy::flatten(Self[Self[A]]) -> Self[A]
+pub fn[A] Lazy::force(Self[A]) -> A
+pub fn[A, B] Lazy::map(Self[A], (A) -> B) -> Self[B]
+pub fn[A, B] Lazy::map_lazy(Self[A], (A) -> B) -> Self[B]
+
+// Type aliases
+
+// Traits
+

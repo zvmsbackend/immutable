@@ -1,0 +1,16 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/utils"
+
+// Values
+pub fn[A, B] iter_all2(Iter[A], Iter[B], (A, B) -> Bool) -> Bool
+
+pub fn[A : Compare] iter_compare(Iter[A], Iter[A]) -> Int
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
+

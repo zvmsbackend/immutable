@@ -1,0 +1,100 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "sennenki/immutable/src/immutable/lazylist"
+
+import(
+  "moonbitlang/core/json"
+  "moonbitlang/core/quickcheck"
+  "moonbitlang/core/quickcheck/splitmix"
+)
+
+// Values
+pub fn[A] cons(A, LazyList[A]) -> LazyList[A]
+
+pub fn[A] cons_delayed(A, () -> LazyList[A]) -> LazyList[A]
+
+pub fn[A] delayed(() -> LazyList[A]) -> LazyList[A]
+
+pub fn[A] from_array(ArrayView[A]) -> LazyList[A]
+
+pub fn[A] from_iter(Iter[A]) -> LazyList[A]
+
+pub fn[A] new() -> LazyList[A]
+
+pub fn[A] repeat(Int, A) -> LazyList[A]
+
+pub fn[A] repeat_infinite(A) -> LazyList[A]
+
+pub fn[A] singleton(A) -> LazyList[A]
+
+pub fn[A, B] unfold(init~ : B, (B) -> (A, B)?) -> LazyList[A]
+
+// Errors
+
+// Types and methods
+type LazyList[A]
+pub fn[A] LazyList::all(Self[A], (A) -> Bool) -> Bool
+pub fn[A] LazyList::any(Self[A], (A) -> Bool) -> Bool
+pub fn[A] LazyList::concat(Self[A], Self[A]) -> Self[A]
+pub fn[A : Eq] LazyList::contains(Self[A], A) -> Bool
+pub fn[A] LazyList::drop(Self[A], Int) -> Self[A]
+pub fn[A] LazyList::drop_while(Self[A], (A) -> Bool) -> Self[A]
+pub fn[A] LazyList::each(Self[A], (A) -> Unit raise?) -> Unit raise?
+pub fn[A] LazyList::eachi(Self[A], (Int, A) -> Unit raise?) -> Unit raise?
+pub fn[A] LazyList::filter(Self[A], (A) -> Bool) -> Self[A]
+pub fn[A, B] LazyList::filter_map(Self[A], (A) -> B?) -> Self[B]
+pub fn[A] LazyList::find(Self[A], (A) -> Bool raise?) -> A? raise?
+pub fn[A] LazyList::find_index(Self[A], (A) -> Bool raise?) -> Int? raise?
+pub fn[A] LazyList::findi(Self[A], (A, Int) -> Bool raise?) -> A? raise?
+pub fn[A] LazyList::flat_map(Self[A], (A) -> Self[A]) -> Self[A]
+pub fn[A] LazyList::flatten(Self[Self[A]]) -> Self[A]
+pub fn[A, B] LazyList::fold(Self[A], init~ : B, (B, A) -> B raise?) -> B raise?
+pub fn[A, B] LazyList::foldi(Self[A], init~ : B, (Int, B, A) -> B raise?) -> B raise?
+pub fn[A] LazyList::head(Self[A]) -> A?
+pub fn[A] LazyList::intercalate(Self[Self[A]], Self[A]) -> Self[A]
+pub fn[A] LazyList::intersperse(Self[A], A) -> Self[A]
+pub fn[A] LazyList::is_empty(Self[A]) -> Bool
+pub fn[A : Eq] LazyList::is_prefix(Self[A], Self[A]) -> Bool
+pub fn[A : Eq] LazyList::is_suffix(Self[A], Self[A]) -> Bool
+pub fn[A] LazyList::iter(Self[A]) -> Iter[A]
+pub fn[A] LazyList::iter2(Self[A]) -> Iter2[Int, A]
+pub fn[A] LazyList::last(Self[A]) -> A?
+pub fn[A] LazyList::length(Self[A]) -> Int
+pub fn[A : Eq, B] LazyList::lookup(Self[(A, B)], A) -> B?
+pub fn[A, B] LazyList::map(Self[A], (A) -> B) -> Self[B]
+pub fn[A, B] LazyList::mapi(Self[A], (Int, A) -> B) -> Self[B]
+pub fn[A : Compare] LazyList::maximum(Self[A]) -> A?
+pub fn[A : Compare] LazyList::minimum(Self[A]) -> A?
+pub fn[A] LazyList::nth(Self[A], Int) -> A?
+pub fn[A] LazyList::prepend(Self[A], A) -> Self[A]
+pub fn[A : Eq] LazyList::remove(Self[A], A) -> Self[A]
+pub fn[A] LazyList::remove_at(Self[A], Int) -> Self[A]
+pub fn[A] LazyList::rev(Self[A]) -> Self[A]
+pub fn[A, B] LazyList::scan_left(Self[A], (B, A) -> B, init~ : B) -> Self[B]
+pub fn[A : Compare] LazyList::sort(Self[A]) -> Self[A]
+pub fn[A] LazyList::tail(Self[A]) -> Self[A]?
+pub fn[A] LazyList::take(Self[A], Int) -> Self[A]
+pub fn[A] LazyList::take_while(Self[A], (A) -> Bool) -> Self[A]
+pub fn[A] LazyList::to_array(Self[A]) -> Array[A]
+pub fn[A] LazyList::uncons(Self[A]) -> (A, Self[A])?
+pub fn[A] LazyList::unsafe_head(Self[A]) -> A
+pub fn[A] LazyList::unsafe_last(Self[A]) -> A
+pub fn[A : Compare] LazyList::unsafe_maximum(Self[A]) -> A
+pub fn[A : Compare] LazyList::unsafe_minimum(Self[A]) -> A
+pub fn[A] LazyList::unsafe_nth(Self[A], Int) -> A
+pub fn[A] LazyList::unsafe_tail(Self[A]) -> Self[A]
+pub fn[A] LazyList::unsafe_uncons(Self[A]) -> (A, Self[A])
+pub fn[A, B] LazyList::zip(Self[A], Self[B]) -> Self[(A, B)]
+pub impl[A] Add for LazyList[A]
+pub impl[A : Compare] Compare for LazyList[A]
+pub impl[A] Default for LazyList[A]
+pub impl[A : Eq] Eq for LazyList[A]
+pub impl[A : Hash] Hash for LazyList[A]
+pub impl[A : Show] Show for LazyList[A]
+pub impl[A : ToJson] ToJson for LazyList[A]
+pub impl[A : @json.FromJson] @json.FromJson for LazyList[A]
+pub impl[A : @quickcheck.Arbitrary] @quickcheck.Arbitrary for LazyList[A]
+
+// Type aliases
+
+// Traits
+
