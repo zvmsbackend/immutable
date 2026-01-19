@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "sennenki/immutable/src/immutable/utils"
+package "immutable/utils"
 
 // Values
 pub fn[A, B] iter_all2(Iter[A], Iter[B], (A, B) -> Bool) -> Bool

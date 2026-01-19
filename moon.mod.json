@@ -1,9 +1,10 @@
 {
   "name": "sennenki/immutable",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "readme": "README.mbt.md",
   "repository": "https://github.com/zvmsbackend/immutable",
   "license": "Apache-2.0",
   "keywords": ["immutable", "data-structure", "functional-programming"],
-  "description": "Immutable data structures for MoonBit"
+  "description": "Immutable data structures for MoonBit",
+  "source": "src/immutable"
 }

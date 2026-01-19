@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "sennenki/immutable/src/immutable/listzipper"
+package "immutable/listzipper"
 
 import(
   "moonbitlang/core/list"

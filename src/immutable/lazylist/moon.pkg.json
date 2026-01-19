@@ -1,6 +1,6 @@
 {
   "name": "sennenki/immutable/lazylist",
   "import": [
-    "sennenki/immutable/src/immutable/lazy"
+    "sennenki/immutable/lazy"
   ]
 }

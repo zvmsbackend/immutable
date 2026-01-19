@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "sennenki/immutable/src/immutable/intmap"
+package "immutable/intmap"
 
 import(
   "moonbitlang/core/json"

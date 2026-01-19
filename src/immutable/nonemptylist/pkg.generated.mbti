@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "sennenki/immutable/src/immutable/nonemptylist"
+package "immutable/nonemptylist"
 
 import(
   "moonbitlang/core/json"

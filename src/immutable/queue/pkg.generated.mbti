@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "sennenki/immutable/src/immutable/queue"
+package "immutable/queue"
 
 import(
   "moonbitlang/core/quickcheck"
