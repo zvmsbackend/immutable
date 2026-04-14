@@ -1,0 +1,9 @@
+import {
+  "moonbitlang/core/json",
+  "moonbitlang/core/list",
+}
+
+options(
+  name: "sennenki/immutable/listzipper",
+)
+

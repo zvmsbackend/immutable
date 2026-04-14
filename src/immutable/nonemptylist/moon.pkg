@@ -1,0 +1,10 @@
+import {
+  "moonbitlang/core/list",
+  "moonbitlang/core/quickcheck",
+  "moonbitlang/core/json",
+}
+
+options(
+  name: "sennenki/immutable/nonemptylist",
+)
+

@@ -1,0 +1,11 @@
+import {
+  "sennenki/immutable/utils",
+  "moonbitlang/core/json",
+  "moonbitlang/core/quickcheck",
+  "moonbitlang/core/list",
+}
+
+options(
+  name: "sennenki/immutable/dlist",
+)
+

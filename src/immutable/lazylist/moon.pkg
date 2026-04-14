@@ -1,0 +1,10 @@
+import {
+  "sennenki/immutable/lazy",
+  "moonbitlang/core/quickcheck",
+  "moonbitlang/core/json",
+}
+
+options(
+  name: "sennenki/immutable/lazylist",
+)
+

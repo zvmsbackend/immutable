@@ -1,0 +1,11 @@
+import {
+  "sennenki/immutable/utils",
+  "moonbitlang/core/list",
+  "moonbitlang/core/quickcheck",
+  "moonbitlang/core/json",
+}
+
+options(
+  name: "sennenki/immutable/deque",
+)
+
