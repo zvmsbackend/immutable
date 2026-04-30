@@ -1,6 +1,0 @@
-{
-    "name": "sennenki/immutable/dlist",
-    "import": [
-      "sennenki/immutable/utils"
-    ]
-}

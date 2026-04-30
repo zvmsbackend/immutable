@@ -6,4 +6,4 @@ using @list {type List}
 struct ListZipper[A] {
   left : List[A]
   right : List[A]
-} derive(Show, Eq, Compare, Hash)
+} derive(Debug, Eq, Compare, Hash)

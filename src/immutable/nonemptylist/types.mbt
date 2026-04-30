@@ -6,4 +6,4 @@ using @list {type List}
 struct NonEmptyList[A] {
   head : A
   tail : List[A]
-} derive(Eq, Hash, Default)
+} derive(Debug, Eq, Hash, Default)

@@ -62,13 +62,13 @@ pub fn[A] new() -> Queue[A] {
 ///|
 /// Creates a Queue from an array of values.
 pub fn[A] from_array(values : ArrayView[A]) -> Queue[A] {
-  values.fold(init=new(), Queue::push(_, _))
+  values.fold(init=new(), (acc, x) => acc.push(x))
 }
 
 ///|
 /// Creates a Queue from an iterator of values.
 pub fn[A] from_iter(values : Iter[A]) -> Queue[A] {
-  values.fold(init=new(), Queue::push(_, _))
+  values.fold(init=new(), (acc, x) => acc.push(x))
 }
 
 ///|
@@ -223,7 +223,9 @@ pub impl[A : Compare] Compare for Queue[A] with compare(self, other) {
 
 ///|
 pub impl[A : Hash] Hash for Queue[A] with hash_combine(self, hasher) {
-  self.iter().each(hasher.combine(_))
+  for item in self {
+    hasher.combine(item)
+  }
 }
 
 ///|

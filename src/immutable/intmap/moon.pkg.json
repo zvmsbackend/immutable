@@ -1,6 +1,0 @@
-{
-    "name": "sennenki/immutable/intmap",
-    "import": [
-      "sennenki/immutable/utils"
-    ]
-}

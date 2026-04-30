@@ -119,9 +119,9 @@ pub fn[A] NonEmptyList::findi(
 pub fn[A] NonEmptyList::flatten(
   self : NonEmptyList[NonEmptyList[A]],
 ) -> NonEmptyList[A] {
-  self.tail.fold(init=cons_list(self.head.head, self.head.tail), (acc, nel) => acc.concat_list(
-    nel.to_list(),
-  ))
+  self.tail.fold(init=cons_list(self.head.head, self.head.tail), (acc, nel) => {
+    acc.concat_list(nel.to_list())
+  })
 }
 
 ///|
@@ -190,9 +190,11 @@ pub fn[A] NonEmptyList::intercalate(
   self : NonEmptyList[NonEmptyList[A]],
   sep : NonEmptyList[A],
 ) -> NonEmptyList[A] {
-  self.tail.fold(init=self.head, (acc, nel) => acc
+  self.tail.fold(init=self.head, (acc, nel) => {
+    acc
     .concat_list(@list.cons(sep.head, sep.tail))
-    .concat_list(@list.cons(nel.head, nel.tail)))
+    .concat_list(@list.cons(nel.head, nel.tail))
+  })
 }
 
 ///|
@@ -201,9 +203,11 @@ pub fn[A] NonEmptyList::intersperse(
   self : NonEmptyList[A],
   sep : A,
 ) -> NonEmptyList[A] {
-  self.tail.fold(init=singleton(self.head), (acc, v) => acc
+  self.tail.fold(init=singleton(self.head), (acc, v) => {
+    acc
     .concat_list(@list.cons(sep, @list.empty()))
-    .concat_list(@list.cons(v, @list.empty())))
+    .concat_list(@list.cons(v, @list.empty()))
+  })
 }
 
 ///|

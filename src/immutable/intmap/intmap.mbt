@@ -437,8 +437,8 @@ pub impl[A : FromJson] FromJson for IntMap[A] with from_json(json, path) {
   obj
   .iter()
   .fold(init=new(), (m, kv) => {
-    let key_int = @strconv.parse_int(kv.0) catch {
-      StrConvError(_) =>
+    let key_int = @string.parse_int(kv.0) catch {
+      _ =>
         raise @json.JsonDecodeError(
           (path, "@intmap.from_json: key is not a valid integer"),
         )

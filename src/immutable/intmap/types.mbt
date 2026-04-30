@@ -4,4 +4,4 @@ enum IntMap[A] {
   Nil
   Tip(Int, A)
   Node(Int, IntMap[A], Int, IntMap[A])
-}
+} derive(Debug)

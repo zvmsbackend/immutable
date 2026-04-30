@@ -8,10 +8,7 @@ test "from_array" {
 
 ///|
 test "pipe" {
-  inspect(
-    1 |> cons_list(_, @list.empty()),
-    content="@nonemptylist.from_array([1])",
-  )
+  inspect(cons_list(1, @list.empty()), content="@nonemptylist.from_array([1])")
 }
 
 ///|

@@ -1,9 +1,11 @@
 ///|
 fn[A] List::split_in_two(self : List[A]) -> (List[A], List[A]) {
-  loop (@list.empty(), self, self) {
-    (acc, More(x, tail=slow_tail), More(_, tail=More(_, tail=fast_tail))) =>
-      continue (acc.prepend(x), slow_tail, fast_tail)
-    (acc, slow, _fast) => break (acc.rev(), slow)
+  for acc = @list.empty(), slow = self, fast = self {
+    match (slow, fast) {
+      (More(x, tail=slow_tail), More(_, tail=More(_, tail=fast_tail))) =>
+        continue acc.prepend(x), slow_tail, fast_tail
+      _ => break (acc.rev(), slow)
+    }
   }
 }
 
@@ -228,7 +230,9 @@ pub impl[A : Compare] Compare for Deque[A] with compare(self, other) {
 
 ///|
 pub impl[A : Hash] Hash for Deque[A] with hash_combine(self, hasher) {
-  self.each(hasher.combine(_))
+  for item in self {
+    hasher.combine(item)
+  }
 }
 
 ///|

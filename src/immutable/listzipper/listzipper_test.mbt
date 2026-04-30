@@ -1,7 +1,7 @@
 ///|
 test "from_list" {
   let zipper = from_list(@list.from_array([1, 2, 3]))
-  inspect(
+  debug_inspect(
     zipper,
     content="{left: @list.from_array([]), right: @list.from_array([1, 2, 3])}",
   )
@@ -25,9 +25,9 @@ test "peek" {
 ///|
 test "move_left and move_right" {
   let zipper = from_list(@list.from_array([1, 2, 3]))
-  inspect(zipper.move_left(), content="None")
+  debug_inspect(zipper.move_left(), content="None")
   let moved = zipper.move_right().unwrap()
-  inspect(
+  debug_inspect(
     moved,
     content="{left: @list.from_array([1]), right: @list.from_array([2, 3])}",
   )

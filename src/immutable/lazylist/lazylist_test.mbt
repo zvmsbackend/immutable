@@ -165,11 +165,13 @@ test "from_iter" {
   let ls = from_iter(xs.iter())
   inspect(ls, content="@lazylist.from_array([1, 2, 3, 4, 5])")
   let mut evaluated = false
-  let lazy_iter = Iter::new(() => if evaluated {
-    None
-  } else {
-    evaluated = true
-    Some(1)
+  let lazy_iter = Iter::new(() => {
+    if evaluated {
+      None
+    } else {
+      evaluated = true
+      Some(1)
+    }
   })
   inspect(from_iter(lazy_iter), content="@lazylist.from_array([1])")
   assert_true(evaluated)
@@ -411,10 +413,12 @@ test "uncons" {
 
 ///|
 test "unfold" {
-  let ls = unfold(init=0, state => if state < 5 {
-    Some((state * 10, state + 1))
-  } else {
-    None
+  let ls = unfold(init=0, state => {
+    if state < 5 {
+      Some((state * 10, state + 1))
+    } else {
+      None
+    }
   })
   inspect(ls, content="@lazylist.from_array([0, 10, 20, 30, 40])")
 }

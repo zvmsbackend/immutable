@@ -232,7 +232,9 @@ pub impl[A : Compare] Compare for DList[A] with compare(self, other) {
 
 ///|
 pub impl[A : Hash] Hash for DList[A] with hash_combine(self, hasher) {
-  self.each(hasher.combine(_))
+  for item in self {
+    hasher.combine(item)
+  }
 }
 
 ///|

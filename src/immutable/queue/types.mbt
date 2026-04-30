@@ -7,7 +7,7 @@ priv enum Status[A] {
   Rev(Int, List[A], List[A], List[A], List[A])
   App(Int, List[A], List[A])
   Done(List[A])
-}
+} derive(Debug)
 
 ///|
 /// A purely functional queue data structure.
@@ -17,4 +17,4 @@ struct Queue[A] {
   status : Status[A]
   rear : List[A]
   rearLen : Int
-}
+} derive(Debug)

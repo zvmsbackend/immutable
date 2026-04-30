@@ -6,4 +6,4 @@ using @list {type List}
 pub struct Deque[A] {
   front : List[A]
   back : List[A]
-}
+} derive(Debug)

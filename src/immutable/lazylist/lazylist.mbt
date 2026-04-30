@@ -43,9 +43,11 @@ pub fn[A] LazyList::concat(
   self : LazyList[A],
   other : LazyList[A],
 ) -> LazyList[A] {
-  from_thunk(() => match self.force() {
-    Cons(hd, tl) => Cons(hd, tl.concat(other))
-    Nil => other.force()
+  from_thunk(() => {
+    match self.force() {
+      Cons(hd, tl) => Cons(hd, tl.concat(other))
+      Nil => other.force()
+    }
   })
 }
 
@@ -64,7 +66,7 @@ pub fn[A] cons_delayed(hd : A, tl : () -> LazyList[A]) -> LazyList[A] {
 ///|
 /// Checks if the LazyList contains a specific value.
 pub fn[A : Eq] LazyList::contains(self : LazyList[A], value : A) -> Bool {
-  self.any(value.equal(_))
+  self.any(item => item == value)
 }
 
 ///|
@@ -76,10 +78,12 @@ pub fn[A] delayed(thunk : () -> LazyList[A]) -> LazyList[A] {
 ///|
 /// Drops the first n elements from the LazyList.
 pub fn[A] LazyList::drop(self : LazyList[A], n : Int) -> LazyList[A] {
-  from_thunk(() => for list = self, n = n {
-    match list.force() {
-      Cons(_, tl) if n > 0 => continue tl, n - 1
-      cell => break cell
+  from_thunk(() => {
+    for list = self, n = n {
+      match list.force() {
+        Cons(_, tl) if n > 0 => continue tl, n - 1
+        cell => break cell
+      }
     }
   })
 }
@@ -90,10 +94,12 @@ pub fn[A] LazyList::drop_while(
   self : LazyList[A],
   f : (A) -> Bool,
 ) -> LazyList[A] {
-  from_thunk(() => for list = self {
-    match list.force() {
-      Cons(hd, tl) if f(hd) => continue tl
-      cell => break cell
+  from_thunk(() => {
+    for list = self {
+      match list.force() {
+        Cons(hd, tl) if f(hd) => continue tl
+        cell => break cell
+      }
     }
   })
 }
@@ -135,11 +141,13 @@ pub fn[A] LazyList::eachi(
 ///|
 /// Filters elements of the LazyList based on a predicate.
 pub fn[A] LazyList::filter(self : LazyList[A], f : (A) -> Bool) -> LazyList[A] {
-  from_thunk(() => for list = self {
-    match list.force() {
-      Cons(hd, tl) if f(hd) => break Cons(hd, tl.filter(f))
-      Cons(_, tl) => continue tl
-      Nil => break Nil
+  from_thunk(() => {
+    for list = self {
+      match list.force() {
+        Cons(hd, tl) if f(hd) => break Cons(hd, tl.filter(f))
+        Cons(_, tl) => continue tl
+        Nil => break Nil
+      }
     }
   })
 }
@@ -150,14 +158,16 @@ pub fn[A, B] LazyList::filter_map(
   self : LazyList[A],
   f : (A) -> B?,
 ) -> LazyList[B] {
-  from_thunk(() => for list = self {
-    match list.force() {
-      Cons(hd, tl) =>
-        match f(hd) {
-          Some(value) => break Cons(value, tl.filter_map(f))
-          None => continue tl
-        }
-      Nil => break Nil
+  from_thunk(() => {
+    for list = self {
+      match list.force() {
+        Cons(hd, tl) =>
+          match f(hd) {
+            Some(value) => break Cons(value, tl.filter_map(f))
+            None => continue tl
+          }
+        Nil => break Nil
+      }
     }
   })
 }
@@ -213,15 +223,17 @@ pub fn[A] LazyList::findi(
 ///|
 /// Flattens a LazyList of LazyLists into a single LazyList.
 pub fn[A] LazyList::flatten(self : LazyList[LazyList[A]]) -> LazyList[A] {
-  from_thunk(() => for outer = self {
-    match outer.force() {
-      Cons(inner, tl_outer) =>
-        match inner.force() {
-          Cons(hd, tl_inner) =>
-            break Cons(hd, not_lazy(Cons(tl_inner, tl_outer)).flatten())
-          Nil => continue tl_outer
-        }
-      Nil => break Nil
+  from_thunk(() => {
+    for outer = self {
+      match outer.force() {
+        Cons(inner, tl_outer) =>
+          match inner.force() {
+            Cons(hd, tl_inner) =>
+              break Cons(hd, not_lazy(Cons(tl_inner, tl_outer)).flatten())
+            Nil => continue tl_outer
+          }
+        Nil => break Nil
+      }
     }
   })
 }
@@ -269,19 +281,23 @@ pub fn[A, B] LazyList::foldi(
 ///|
 /// Creates a LazyList from an array.
 pub fn[A] from_array(arr : ArrayView[A]) -> LazyList[A] {
-  unfold(init=0, i => if i < arr.length() {
-    Some((arr[i], i + 1))
-  } else {
-    None
+  unfold(init=0, i => {
+    if i < arr.length() {
+      Some((arr[i], i + 1))
+    } else {
+      None
+    }
   })
 }
 
 ///|
 /// Creates a LazyList from an iterator.
 pub fn[A] from_iter(iter : Iter[A]) -> LazyList[A] {
-  from_thunk(() => match iter.next() {
-    Some(item) => Cons(item, from_iter(iter))
-    None => Nil
+  from_thunk(() => {
+    match iter.next() {
+      Some(item) => Cons(item, from_iter(iter))
+      None => Nil
+    }
   })
 }
 
@@ -341,13 +357,15 @@ pub fn[A] LazyList::intercalate(
 ///|
 /// Intersperse a separator value between each element of the LazyList.
 pub fn[A] LazyList::intersperse(self : LazyList[A], sep : A) -> LazyList[A] {
-  from_thunk(() => match self.force() {
-    Cons(hd, tl) =>
-      match tl.force() {
-        Cons(_) => Cons(hd, cons_delayed(sep, () => tl.intersperse(sep)))
-        Nil => Cons(hd, tl.intersperse(sep))
-      }
-    Nil => Nil
+  from_thunk(() => {
+    match self.force() {
+      Cons(hd, tl) =>
+        match tl.force() {
+          Cons(_) => Cons(hd, cons_delayed(sep, () => tl.intersperse(sep)))
+          Nil => Cons(hd, tl.intersperse(sep))
+        }
+      Nil => Nil
+    }
   })
 }
 
@@ -388,12 +406,14 @@ pub fn[A : Eq] LazyList::is_suffix(
 /// Returns an iterator over the elements of the LazyList.
 pub fn[A] LazyList::iter(self : LazyList[A]) -> Iter[A] {
   let mut self = self
-  Iter::new(() => self
+  Iter::new(() => {
+    self
     .uncons()
     .map(pair => {
       self = pair.1
       pair.0
-    }))
+    })
+  })
 }
 
 ///|
@@ -401,14 +421,16 @@ pub fn[A] LazyList::iter(self : LazyList[A]) -> Iter[A] {
 pub fn[A] LazyList::iter2(self : LazyList[A]) -> Iter2[Int, A] {
   let mut index = 0
   let mut self = self
-  Iter2::new(() => self
+  Iter2::new(() => {
+    self
     .uncons()
     .map(pair => {
       let result = (index, pair.0)
       index += 1
       self = pair.1
       result
-    }))
+    })
+  })
 }
 
 ///|
@@ -432,9 +454,11 @@ pub fn[A : Eq, B] LazyList::lookup(self : LazyList[(A, B)], key : A) -> B? {
 ///|
 /// Maps each element of the LazyList using a provided function.
 pub fn[A, B] LazyList::map(self : LazyList[A], f : (A) -> B) -> LazyList[B] {
-  from_thunk(() => match self.force() {
-    Cons(hd, tl) => Cons(f(hd), tl.map(f))
-    Nil => Nil
+  from_thunk(() => {
+    match self.force() {
+      Cons(hd, tl) => Cons(f(hd), tl.map(f))
+      Nil => Nil
+    }
   })
 }
 
@@ -445,9 +469,11 @@ pub fn[A, B] LazyList::mapi(
   f : (Int, A) -> B,
 ) -> LazyList[B] {
   fn go(list : LazyList[A], index : Int) -> LazyList[B] {
-    from_thunk(() => match list.force() {
-      Cons(hd, tl) => Cons(f(index, hd), go(tl, index + 1))
-      Nil => Nil
+    from_thunk(() => {
+      match list.force() {
+        Cons(hd, tl) => Cons(f(index, hd), go(tl, index + 1))
+        Nil => Nil
+      }
     })
   }
 
@@ -457,25 +483,29 @@ pub fn[A, B] LazyList::mapi(
 ///|
 /// Returns the maximum element in the LazyList, if it exists. This forces the entire list.
 pub fn[A : Compare] LazyList::maximum(self : LazyList[A]) -> A? {
-  self.fold(init=None, (current_max, item) => Some(
-    match current_max {
-      Some(max) if item > max => item
-      Some(max) => max
-      None => item
-    },
-  ))
+  self.fold(init=None, (current_max, item) => {
+    Some(
+      match current_max {
+        Some(max) if item > max => item
+        Some(max) => max
+        None => item
+      },
+    )
+  })
 }
 
 ///|
 /// Returns the minimum element in the LazyList, if it exists. This forces the entire list.
 pub fn[A : Compare] LazyList::minimum(self : LazyList[A]) -> A? {
-  self.fold(init=None, (current_min, item) => Some(
-    match current_min {
-      Some(min) if item < min => item
-      Some(min) => min
-      None => item
-    },
-  ))
+  self.fold(init=None, (current_min, item) => {
+    Some(
+      match current_min {
+        Some(min) if item < min => item
+        Some(min) => min
+        None => item
+      },
+    )
+  })
 }
 
 ///|
@@ -499,11 +529,13 @@ pub fn[A] LazyList::prepend(self : LazyList[A], head : A) -> LazyList[A] {
 ///|
 /// Removes the first occurrence of a specific value from the LazyList.
 pub fn[A : Eq] LazyList::remove(self : LazyList[A], value : A) -> LazyList[A] {
-  from_thunk(() => for list = self {
-    match list.force() {
-      Cons(hd, tl) if hd == value => continue tl
-      Cons(hd, tl) => break Cons(hd, tl.remove(value))
-      Nil => break Nil
+  from_thunk(() => {
+    for list = self {
+      match list.force() {
+        Cons(hd, tl) if hd == value => continue tl
+        Cons(hd, tl) => break Cons(hd, tl.remove(value))
+        Nil => break Nil
+      }
     }
   })
 }
@@ -511,10 +543,12 @@ pub fn[A : Eq] LazyList::remove(self : LazyList[A], value : A) -> LazyList[A] {
 ///|
 /// Removes the element at the specified index from the LazyList.
 pub fn[A] LazyList::remove_at(self : LazyList[A], n : Int) -> LazyList[A] {
-  from_thunk(() => match self.force() {
-    Cons(_, tl) if n == 0 => tl.force()
-    Cons(hd, tl) => Cons(hd, tl.remove_at(n - 1))
-    Nil => Nil
+  from_thunk(() => {
+    match self.force() {
+      Cons(_, tl) if n == 0 => tl.force()
+      Cons(hd, tl) => Cons(hd, tl.remove_at(n - 1))
+      Nil => Nil
+    }
   })
 }
 
@@ -546,12 +580,14 @@ pub fn[A, B] LazyList::scan_left(
   f : (B, A) -> B,
   init~ : B,
 ) -> LazyList[B] {
-  from_thunk(() => match self.force() {
-    Cons(hd, tl) => {
-      let new_acc = f(init, hd)
-      Cons(init, tl.scan_left(f, init=new_acc))
+  from_thunk(() => {
+    match self.force() {
+      Cons(hd, tl) => {
+        let new_acc = f(init, hd)
+        Cons(init, tl.scan_left(f, init=new_acc))
+      }
+      Nil => Cons(init, new())
     }
-    Nil => Cons(init, new())
   })
 }
 
@@ -581,10 +617,12 @@ pub fn[A] LazyList::tail(self : LazyList[A]) -> LazyList[A]? {
 ///|
 /// Takes the first n elements from the LazyList.
 pub fn[A] LazyList::take(self : LazyList[A], n : Int) -> LazyList[A] {
-  from_thunk(() => match self.force() {
-    Cons(_) if n == 0 => Nil
-    Cons(hd, tl) => Cons(hd, tl.take(n - 1))
-    Nil => Nil
+  from_thunk(() => {
+    match self.force() {
+      Cons(_) if n == 0 => Nil
+      Cons(hd, tl) => Cons(hd, tl.take(n - 1))
+      Nil => Nil
+    }
   })
 }
 
@@ -594,18 +632,18 @@ pub fn[A] LazyList::take_while(
   self : LazyList[A],
   f : (A) -> Bool,
 ) -> LazyList[A] {
-  from_thunk(() => match self.force() {
-    Cons(hd, tl) if f(hd) => Cons(hd, tl.take_while(f))
-    _ => Nil
+  from_thunk(() => {
+    match self.force() {
+      Cons(hd, tl) if f(hd) => Cons(hd, tl.take_while(f))
+      _ => Nil
+    }
   })
 }
 
 ///|
 /// Converts the LazyList to an array. This forces the entire list.
 pub fn[A] LazyList::to_array(self : LazyList[A]) -> Array[A] {
-  let result = []
-  self.each(result.push(_))
-  result
+  self.iter().collect()
 }
 
 ///|
@@ -621,9 +659,11 @@ pub fn[A] LazyList::uncons(self : LazyList[A]) -> (A, LazyList[A])? {
 ///|
 /// Creates a LazyList by unfolding a function over an initial state.
 pub fn[A, B] unfold(init~ : B, f : (B) -> (A, B)?) -> LazyList[A] {
-  from_thunk(() => match f(init) {
-    Some((value, next)) => Cons(value, unfold(init=next, f))
-    None => Nil
+  from_thunk(() => {
+    match f(init) {
+      Some((value, next)) => Cons(value, unfold(init=next, f))
+      None => Nil
+    }
   })
 }
 
@@ -684,9 +724,11 @@ pub fn[A, B] LazyList::zip(
   self : LazyList[A],
   other : LazyList[B],
 ) -> LazyList[(A, B)] {
-  from_thunk(() => match (self.force(), other.force()) {
-    (Cons(hd1, tl1), Cons(hd2, tl2)) => Cons((hd1, hd2), tl1.zip(tl2))
-    _ => Nil
+  from_thunk(() => {
+    match (self.force(), other.force()) {
+      (Cons(hd1, tl1), Cons(hd2, tl2)) => Cons((hd1, hd2), tl1.zip(tl2))
+      _ => Nil
+    }
   })
 }
 
